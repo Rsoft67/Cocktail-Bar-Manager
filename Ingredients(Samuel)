@@ -1,0 +1,81 @@
+package com.cytech.GestionFichiers;
+
+public class Ingredient {
+    private String name;
+    private int quantity;
+    private float sugar;
+    private float alcohol;
+    private float price;
+
+    public Ingredient() {
+    }
+
+    public Ingredient(String name, int quantity, float sugar, float alcohol, float price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.sugar = sugar;
+        this.alcohol = alcohol;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", sugar=" + sugar +
+                ", alcohol=" + alcohol +
+                ", price=" + price +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Ingredient ingredient = (Ingredient) obj;
+        return name.equals(ingredient.name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public float getSugar() {
+        return sugar;
+    }
+
+    public void setSugar(float sugar) {
+        this.sugar = sugar;
+    }
+
+    public float getAlcohol() {
+        return alcohol;
+    }
+
+    public void setAlcohol(float alcohol) {
+        this.alcohol = alcohol;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+}

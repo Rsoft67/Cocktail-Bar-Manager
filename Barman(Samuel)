@@ -1,0 +1,79 @@
+package com.cytech.GestionFichiers;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+
+
+  
+
+    public void consumeCocktail(String name) {
+        Cocktail cocktail = cocktails.stream().filter(c -> c.getName().equals(name)).findFirst().orElse(null);
+        // remove the ingredients of the cocktail from the ingredients.json file
+        try {
+            for (Map.Entry<String, Integer> entry : cocktail.getIngredients().entrySet()) {
+                Ingredient ingredient = ingredients.stream().filter(i -> i.getName().equals(entry.getKey())).findFirst().orElse(null);
+                int quantity = entry.getValue();
+                if (ingredients.contains(ingredient) && ingredient.getQuantity()  >= quantity) {
+
+                        ingredient.setQuantity(ingredient.getQuantity() - quantity);
+
+
+                }
+
+                else {
+                    throw new Exception("Not enough " + ingredient.getName() + " in stock");
+                }
+            }
+            objectMapper.writeValue(new File(ingredientsJson), ingredients);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void restockIngredient(String name, int quantity) {
+        Ingredient ingredient = ingredients.stream().filter(i -> i.getName().equals(name)).findFirst().orElse(null);
+        // add the quantity of the ingredient to the ingredients.json file
+        try {
+            if (ingredients.contains(ingredient)) {
+                ingredient.setQuantity(ingredient.getQuantity() + quantity);
+            } else {
+                throw new Exception(ingredient.getName() + " not in stock");
+            }
+            objectMapper.writeValue(new File(ingredientsJson), ingredients);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void consumeIngredient(String name,int quantityChoose)  {
+        try {
+            for(Ingredient ingredient : ingredients){
+                if( ingredient.getName().equals(name)) {
+                    ingredient.setQuantity(ingredient.getQuantity() - quantityChoose);
+                    break;
+                }
+            }
+            objectMapper.writeValue(new File(ingredientsJson), ingredients);
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
+    }
+
+
+
+    
+
+}
+
+
+
+

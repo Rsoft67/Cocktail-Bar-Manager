@@ -1,0 +1,11 @@
+
+package Produit;
+public class Ingredient extends Produit {
+
+    public Ingredient ( String nom ,float prix, int stock,){
+        super(nom, prix , stock);
+        
+    }
+
+
+}

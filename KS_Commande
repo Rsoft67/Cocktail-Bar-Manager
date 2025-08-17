@@ -1,0 +1,169 @@
+package Commande;
+
+import Barman.Barman;
+import Barman.Client;
+import Produit.Produit;
+
+
+import java.io.File;
+import java.util.ArrayList;
+import collection_Fichiers;
+
+public class Commande {
+    private Barman barmanC ;
+    private Client clientC ;
+
+    private ArrayList<Produit> produitsBrut ;
+    private ArrayList<Produit> coktailPersonnalisé;
+    private float bill ; /*montantpayé*/
+    private static float turnover; /*chiffred'affaire*/
+
+
+
+
+    public Commande ( Barman barmanc , Client clientc , Produit[] produitsBrut  , Produit[] coktailPersonnalise){
+        this.barmanC=barmanc;
+        this.clientC= clientc;
+        for( Produit prodBrut : produitsBrut ){
+            if ( prodBrut instanceof Produit.Boisson ) {
+                if( chercherBoisson(prodBrut)){
+                    this.produitsBrut.add(prodBrut);
+                    consumeBoisson(prodBrut.getName());
+                    this.bill+=prodBrut.getPrice();
+
+
+                }
+                else{
+                    System.out.println("le produit n'est pas disponible");
+                }
+            }
+            else if (prodBrut instanceof Produit.Ingredient) {
+                if( chercherIngredient(prodBrut)){
+                    this.produitsBrut.add(prodBrut);
+                    consumeIngredient(prodBrut.getName());
+                    this.bill+=prodBrut.getPrice();
+
+                }
+                else{
+                    System.out.println("le produit n'est pas disponible");
+                }
+
+
+            }
+            else if (prodBrut instanceof Produit.Cocktail){
+                if( chercherCoktail(prodBrut)){
+                    this.produitsBrut.add(prodBrut);
+                    consumeCocktail(prodBrut.getName());
+                    this.bill+=prodBrut.getPrice();
+
+                }
+                else{
+                    System.out.println("le produit n'est pas disponible");
+                }
+
+            }
+
+        }
+        for ( Produit ingredPreso : coktailPersonnalise){
+            if ( ingredPreso instanceof Produit.Boisson ) {
+                if( chercherBoisson(ingredPreso)){
+                    this.produitsBrut.add(ingredPreso);
+                    consumeBoisson(ingredPreso.getName());
+                    this.bill+=ingredPreso.getPrice();
+
+
+
+                }
+                else{
+                    System.out.println("le produit n'est pas disponible");
+                }
+            }
+            else if (ingredPreso instanceof Produit.Ingredient) {
+                if( chercherIngredient(ingredPreso)){
+                    this.produitsBrut.add(ingredPreso);
+                    consumeIngredient(ingredPreso.getName());
+                    this.bill+=ingredPreso.getPrice();
+
+                }
+                else{
+                    System.out.println("le produit n'est pas disponible");
+                }
+
+
+            }
+            else if (ingredPreso instanceof Produit.Cocktail){
+                if( chercherCoktail(ingredPreso)){
+                    this.produitsBrut.add(ingredPreso);
+                    consumeIngredient(ingredPreso.getName());
+                    this.bill+=ingredPreso.getPrice();
+
+                }
+                else{
+                    System.out.println("le produit n'est pas disponible");
+                }
+
+            }
+
+
+        }
+        turnover+=this.bill
+
+    }
+
+    public void consumeIngredient(String name)  {
+        try {
+            for(Ingredient ingredient : ingredients){
+                if( ingredient.getName().equals(name)) {
+                    ingredient.setStock(ingredient.getStock() - ingredient.getQuantity());
+                    break;
+                }
+            }
+            objectMapper.writeValue(new File(ingredientsJson), ingredients);
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
+    }
+
+    public void consumeBoisson(String name ) {
+        try {
+
+            for (Produit.Boisson boisson : boissons) {
+                if (boisson.getName().equals(name)) {
+                    boisson.setStock(boisson.getStock() - boisson.getQuantity());
+                    break;
+                }
+
+                objectMapper.writeValue(new File(boissonsJson), boissons);
+            }catch(Exception e){
+
+                e.printStackTrace();
+            }
+        }
+    }
+    public void consumeCocktail(String name )  {
+            try {
+
+                for(Produit.Cocktail cocktail : cocktails){
+                    if( cocktail.getName().equals(name)) {
+                        cocktail.setStock(coktail.getStock() - coktail.getquantity());
+                        break;
+                    }
+
+                    objectMapper.writeValue(new File(coktailsJson), cocktails);
+                }catch (Exception e){
+
+                    e.printStackTrace();
+                }
+            }
+
+
+        }
+        public static float getTurnover(){
+            return this.turnover;
+        }
+
+
+
+}
+

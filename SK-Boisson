@@ -1,0 +1,49 @@
+package Produit;
+
+public class Boisson extends Produit {
+    private float alcohol;
+    private float sugar;
+    private String type;
+
+    public Boisson(String nom , float prix, int stock , float degreAlcool , float degreSucre) {
+        super(nom, prix, stock);
+        this.alcohol=degreAlcool;
+        this.sugar=degreSucre;
+        if ( degreAlcool > 0){
+            this.type = "alcoolisé";
+        }
+        else{
+            this.type= "nonAlcoolisé";
+        }
+    }
+
+    public void setAlcohol(float degreAlcool ){
+        this.alcohol= degreAlcool;
+
+    }
+
+    public float getAlcohol() {
+        return this.alcohol;
+    }
+
+
+
+    public void setSugar(float degreSucre){
+        this.alcohol = degreSucre;
+    }
+
+    public float getSugar() {
+        return this.sugar;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type=type;
+
+    }
+
+}
+

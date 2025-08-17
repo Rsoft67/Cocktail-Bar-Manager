@@ -1,0 +1,49 @@
+package com.cytech.GestionFichiers;
+
+
+
+import java.util.Map;
+
+public class Cocktail {
+
+    private String name;
+    private Map<String, Integer> ingredients;
+
+    public Cocktail() {}
+
+    public Cocktail(String name, Map<String, Integer> ingredients) {
+        this.name = name;
+        this.ingredients = ingredients;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Map<String, Integer> getIngredients() {
+        return ingredients;
+    }
+
+    @Override
+    public String toString() {
+        return "Cocktail{" +
+                "ingredients=" + ingredients +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Cocktail cocktail = (Cocktail) obj;
+        return name.equals(cocktail.name) && ingredients.equals(cocktail.ingredients);
+    }
+}
